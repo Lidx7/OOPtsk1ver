@@ -1,7 +1,7 @@
 public class King extends ConcretePiece {
     private String type;
 
-    public King(ConcretePiece cp){
+    public King(ConcretePiece cp){//kgjhdfcjhdajhdacjhdgsjhgjsd
         super(cp.getPosition(), cp.getOwner(), "King");
     }
     public King(Position position, Player owner){
