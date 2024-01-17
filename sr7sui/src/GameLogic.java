@@ -1,5 +1,5 @@
 import java.lang.Math;
-public class GameLogic implements PlayableLogic{//GJGFHGDHGDHGH
+public class GameLogic implements PlayableLogic{//
 
     private ConcretePiece[][] boardPieces;
     private Position[][] boardPositions;
@@ -9,7 +9,7 @@ public class GameLogic implements PlayableLogic{//GJGFHGDHGDHGH
 
     public GameLogic(){
         boardPieces = new ConcretePiece[11][11];
-        boardPositions = new Position[11][11];
+//        boardPositions = new Position[11][11];
     }
 
     public boolean move(Position a, Position b) {
@@ -51,11 +51,9 @@ public class GameLogic implements PlayableLogic{//GJGFHGDHGDHGH
      */
 
     @Override
-    public Piece getPieceAtPosition(Position position) {
-        if(position.get_position() != null) {
-            return position.get_position();
-        }
-        return null;
+    public ConcretePiece getPieceAtPosition(Position position) {
+//        if (position==boardPositions[11][11]);
+        return boardPieces[position.get_y()][position.get_x()];
     }
 
     @Override
@@ -70,6 +68,15 @@ public class GameLogic implements PlayableLogic{//GJGFHGDHGDHGH
 
     @Override
     public boolean isGameFinished() {
+        Position p4=new Position(0,0);
+        Position p1=new Position(11,11);
+        Position p2=new Position(0,11);
+        Position p5=new Position(11,0);
+        if (getPieceAtPosition(p4).getType().equals("king")){
+            return true;}
+        else if (getPieceAtPosition(p5).getType().equals("king"))return true;
+        else if (getPieceAtPosition(p1).getType().equals("king"))return true;
+        else if (getPieceAtPosition(p2).getType().equals("king"))return true;
         return false;
     }
 
