@@ -1,5 +1,5 @@
 import java.lang.Math;
-public class GameLogic implements PlayableLogic{
+public class GameLogic implements PlayableLogic{//GJGFHGDHGDHGH
 
     private ConcretePiece[][] boardPieces;
     private Position[][] boardPositions;
