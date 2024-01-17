@@ -1,9 +1,22 @@
 import java.lang.Math;
 public class GameLogic implements PlayableLogic{
+
+    private ConcretePiece[][] boardPieces;
+    private Position[][] boardPositions;
+    private ConcretePlayer player1 = new ConcretePlayer(true);
+    private ConcretePlayer player2 = new ConcretePlayer(false);
+    private boolean turn = false; // true - player1, false - player2
+
+    public GameLogic(){
+        boardPieces = new ConcretePiece[11][11];
+        boardPositions = new Position[11][11];
+    }
+
     public boolean move(Position a, Position b) {
         if (b==null) return true;
         if(isValid(a,b)) {
             a.set_position(b);
+            turn = !turn;
             return true;
         }
         return false;
@@ -47,12 +60,12 @@ public class GameLogic implements PlayableLogic{
 
     @Override
     public Player getFirstPlayer() {
-        return null;
+        return player1;
     }
 
     @Override
     public Player getSecondPlayer() {
-        return null;
+        return player2;
     }
 
     @Override
@@ -62,12 +75,16 @@ public class GameLogic implements PlayableLogic{
 
     @Override
     public boolean isSecondPlayerTurn() {
-        return false;
+        return !turn;
     }
 
     @Override
     public void reset() {
-
+        boardPieces = new ConcretePiece[11][11];
+        boardPositions = new Position[11][11];
+        player1 = new ConcretePlayer(true);
+        player2 = new ConcretePlayer(false);
+        turn = false;
     }
 
     @Override
