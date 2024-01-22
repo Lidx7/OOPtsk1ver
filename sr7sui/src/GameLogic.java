@@ -46,7 +46,7 @@ public class GameLogic implements PlayableLogic{//
         return false;
     }
 
-    public boolean isValid(Position current, Position destination){
+    private boolean isValid(Position current, Position destination){
         int crntX = current.get_x(),           crntY = current.get_y();
         int destX = destination.get_x(),   destY = destination.get_y();
         boolean validX = false, validY = false;
@@ -80,10 +80,35 @@ public class GameLogic implements PlayableLogic{//
             validX = true;
        }
         if(Math.abs(crntY - destY) != 0){
+
+//            while(Math.abs(destY - crntY) != 0) {
+//
+//                if (boardPieces[destY][crntX] != null){
+//                    System.out.println("vurb7");
+//                    return false;
+//                }
+//                if(crntY > destY){
+//                    destY++;
+//                }
+//                else{
+//                    crntY++;
+//                }
+//            }
             validY = true;
         }
 
         return (validX ^ validY);
+    }
+    private boolean validWay(int crnt, int dest){
+        if(crnt > dest){
+            int temp = crnt;
+            crnt = dest;
+            dest = temp;
+        }
+        while(Math.abs(dest - crnt) != 0) {
+
+        }
+        return false;
     }
 
     /*
@@ -136,7 +161,7 @@ public class GameLogic implements PlayableLogic{//
         }
         return game||game1;
 
-    }//a//anitamimm
+    }//anitamim
 
     @Override
     public boolean isSecondPlayerTurn() {
