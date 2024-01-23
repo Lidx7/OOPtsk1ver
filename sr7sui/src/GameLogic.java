@@ -24,16 +24,34 @@ public class GameLogic implements PlayableLogic{//
             if (boardPieces[b.get_y()][b.get_x()].getType().equals("♟")){
                     if((b.get_x()<=9)){
                         if (!(boardPieces[b.get_y()][b.get_x()+1]==null)&&(boardPieces[b.get_y()][b.get_x()+1].getType().equals("♟")) && !(boardPieces[b.get_y()][b.get_x()+1].getOwner().equals(p1))){
-                        if((b.get_x()+2<10)&&!(boardPieces[b.get_y()][b.get_x()+2]==null)&&(boardPieces[b.get_y()][b.get_x()+2].getOwner()==p1)&&(boardPieces[b.get_y()][b.get_x()+2].getType().equals("♟"))||(b.get_x()+2>10)){
+                        if((b.get_x()+2<=10)&&!(boardPieces[b.get_y()][b.get_x()+2]==null)&&(boardPieces[b.get_y()][b.get_x()+2].getOwner()==p1)&&(boardPieces[b.get_y()][b.get_x()+2].getType().equals("♟"))||(b.get_x()+2>10)){
                            boardPieces[b.get_y()][b.get_x()+1]=null;}
                         }
                     }
                 if((b.get_y()<=9)){
                     if (!(boardPieces[b.get_y()+1][b.get_x()]==null)&&(boardPieces[b.get_y()+1][b.get_x()].getType().equals("♟")) && !(boardPieces[b.get_y()+1][b.get_x()].getOwner().equals(p1))){
-                        if((b.get_y()+2<10)&&!(boardPieces[b.get_y()+2][b.get_x()]==null)&&(boardPieces[b.get_y()+2][b.get_x()].getOwner()==p1)&&(boardPieces[b.get_y()+2][b.get_x()].getType().equals("♟"))||(b.get_y()+2>10)){
+                        if((b.get_y()+2<=10)&&!(boardPieces[b.get_y()+2][b.get_x()]==null)&&(boardPieces[b.get_y()+2][b.get_x()].getOwner()==p1)&&(boardPieces[b.get_y()+2][b.get_x()].getType().equals("♟"))||(b.get_y()+2>10)){
                             boardPieces[b.get_y()+1][b.get_x()]=null;}
                     }
                 }
+                if((b.get_y()>=1)){
+                    if (!(boardPieces[b.get_y()-1][b.get_x()]==null)&&(boardPieces[b.get_y()-1][b.get_x()].getType().equals("♟")) && !(boardPieces[b.get_y()-1][b.get_x()].getOwner().equals(p1))){
+                        if((b.get_y()-2>=0)&&!(boardPieces[b.get_y()-2][b.get_x()]==null)&&(boardPieces[b.get_y()-2][b.get_x()].getOwner()==p1)&&(boardPieces[b.get_y()-2][b.get_x()].getType().equals("♟"))||(b.get_y()-2<0)){
+                            boardPieces[b.get_y()-1][b.get_x()]=null;}
+                    }
+                }
+                if((b.get_x()>=1)){
+                    if (!(boardPieces[b.get_y()][b.get_x()-1]==null)&&(boardPieces[b.get_y()][b.get_x()-1].getType().equals("♟")) && !(boardPieces[b.get_y()][b.get_x()-1].getOwner().equals(p1))){
+                        if((b.get_x()-2>=0)&&!(boardPieces[b.get_y()][b.get_x()-2]==null)&&(boardPieces[b.get_y()][b.get_x()-2].getOwner()==p1)&&(boardPieces[b.get_y()][b.get_x()-2].getType().equals("♟"))||(b.get_x()-2<0)){
+                            boardPieces[b.get_y()][b.get_x()-1]=null;}
+                    }
+                }
+                if (!(boardPieces[b.get_y()][b.get_x()-1]==null)&&(boardPieces[b.get_y()][b.get_x()-1].getType().equals("♟")) && !(boardPieces[b.get_y()][b.get_x()-1].getOwner().equals(p1))) {
+
+
+
+                }
+
                 }
 //                if(boardPieces[b.get_y()][b.get_x()]){
 
