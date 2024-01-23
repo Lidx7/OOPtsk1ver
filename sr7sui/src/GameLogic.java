@@ -1,60 +1,95 @@
 import java.lang.Math;
-public class GameLogic implements PlayableLogic{//
+public class GameLogic implements PlayableLogic {//
 
     private ConcretePiece[][] boardPieces;
-  //  private Position[][] boardPositions;
+    //  private Position[][] boardPositions;
     private ConcretePlayer player1 = new ConcretePlayer(true);
     private ConcretePlayer player2 = new ConcretePlayer(false);
     private boolean turn = false; // true - player1, false - player2
 
-    public GameLogic(){
+    public GameLogic() {
         boardPieces = new ConcretePiece[11][11];
         reset();
 //        boardPositions = new Position[11][11];
     }
 
     public boolean move(Position a, Position b) {
-        if (b==null) return true;
-        if(isValid(a,b)) {
-            boardPieces[b.get_y()][b.get_x()]=boardPieces[a.get_y()][a.get_x()];;
+        if (b == null) return true;
+        if (isValid(a, b)) {
+            boardPieces[b.get_y()][b.get_x()] = boardPieces[a.get_y()][a.get_x()];
+            ;
             boardPieces[a.get_y()][a.get_x()] = null;
 
             turn = !turn;
-            Player p1=  boardPieces[b.get_y()][b.get_x()].getOwner();
-            if (boardPieces[b.get_y()][b.get_x()].getType().equals("♟")){
-                    if((b.get_x()<=9)){
-                        if (!(boardPieces[b.get_y()][b.get_x()+1]==null)&&(boardPieces[b.get_y()][b.get_x()+1].getType().equals("♟")) && !(boardPieces[b.get_y()][b.get_x()+1].getOwner().equals(p1))){
-                        if((b.get_x()+2<=10)&&!(boardPieces[b.get_y()][b.get_x()+2]==null)&&(boardPieces[b.get_y()][b.get_x()+2].getOwner()==p1)&&(boardPieces[b.get_y()][b.get_x()+2].getType().equals("♟"))||(b.get_x()+2>10)){
-                           boardPieces[b.get_y()][b.get_x()+1]=null;}
+            Player p1 = boardPieces[b.get_y()][b.get_x()].getOwner();
+            if (boardPieces[b.get_y()][b.get_x()].getType().equals("♟")) {
+                if ((b.get_x() <= 9)) {
+                    if (!(boardPieces[b.get_y()][b.get_x() + 1] == null) && (boardPieces[b.get_y()][b.get_x() + 1].getType().equals("♟")) && !(boardPieces[b.get_y()][b.get_x() + 1].getOwner().equals(p1))) {
+                        if ((b.get_x() + 2 <= 10) && !(boardPieces[b.get_y()][b.get_x() + 2] == null) && (boardPieces[b.get_y()][b.get_x() + 2].getOwner() == p1) && (boardPieces[b.get_y()][b.get_x() + 2].getType().equals("♟")) || (b.get_x() + 2 > 10)) {
+                            boardPieces[b.get_y()][b.get_x() + 1] = null;
                         }
                     }
-                if((b.get_y()<=9)){
-                    if (!(boardPieces[b.get_y()+1][b.get_x()]==null)&&(boardPieces[b.get_y()+1][b.get_x()].getType().equals("♟")) && !(boardPieces[b.get_y()+1][b.get_x()].getOwner().equals(p1))){
-                        if((b.get_y()+2<=10)&&!(boardPieces[b.get_y()+2][b.get_x()]==null)&&(boardPieces[b.get_y()+2][b.get_x()].getOwner()==p1)&&(boardPieces[b.get_y()+2][b.get_x()].getType().equals("♟"))||(b.get_y()+2>10)){
-                            boardPieces[b.get_y()+1][b.get_x()]=null;}
+                }
+                if ((b.get_y() <= 9)) {
+                    if (!(boardPieces[b.get_y() + 1][b.get_x()] == null) && (boardPieces[b.get_y() + 1][b.get_x()].getType().equals("♟")) && !(boardPieces[b.get_y() + 1][b.get_x()].getOwner().equals(p1))) {
+                        if ((b.get_y() + 2 <= 10) && !(boardPieces[b.get_y() + 2][b.get_x()] == null) && (boardPieces[b.get_y() + 2][b.get_x()].getOwner() == p1) && (boardPieces[b.get_y() + 2][b.get_x()].getType().equals("♟")) || (b.get_y() + 2 > 10)) {
+                            boardPieces[b.get_y() + 1][b.get_x()] = null;
+                        }
                     }
                 }
-                if((b.get_y()>=1)){
-                    if (!(boardPieces[b.get_y()-1][b.get_x()]==null)&&(boardPieces[b.get_y()-1][b.get_x()].getType().equals("♟")) && !(boardPieces[b.get_y()-1][b.get_x()].getOwner().equals(p1))){
-                        if((b.get_y()-2>=0)&&!(boardPieces[b.get_y()-2][b.get_x()]==null)&&(boardPieces[b.get_y()-2][b.get_x()].getOwner()==p1)&&(boardPieces[b.get_y()-2][b.get_x()].getType().equals("♟"))||(b.get_y()-2<0)){
-                            boardPieces[b.get_y()-1][b.get_x()]=null;}
+                if ((b.get_y() >= 1)) {
+                    if (!(boardPieces[b.get_y() - 1][b.get_x()] == null) && (boardPieces[b.get_y() - 1][b.get_x()].getType().equals("♟")) && !(boardPieces[b.get_y() - 1][b.get_x()].getOwner().equals(p1))) {
+                        if ((b.get_y() - 2 >= 0) && !(boardPieces[b.get_y() - 2][b.get_x()] == null) && (boardPieces[b.get_y() - 2][b.get_x()].getOwner() == p1) && (boardPieces[b.get_y() - 2][b.get_x()].getType().equals("♟")) || (b.get_y() - 2 < 0)) {
+                            boardPieces[b.get_y() - 1][b.get_x()] = null;
+                        }
                     }
                 }
-                if((b.get_x()>=1)){
-                    if (!(boardPieces[b.get_y()][b.get_x()-1]==null)&&(boardPieces[b.get_y()][b.get_x()-1].getType().equals("♟")) && !(boardPieces[b.get_y()][b.get_x()-1].getOwner().equals(p1))){
-                        if((b.get_x()-2>=0)&&!(boardPieces[b.get_y()][b.get_x()-2]==null)&&(boardPieces[b.get_y()][b.get_x()-2].getOwner()==p1)&&(boardPieces[b.get_y()][b.get_x()-2].getType().equals("♟"))||(b.get_x()-2<0)){
-                            boardPieces[b.get_y()][b.get_x()-1]=null;}
+                if ((b.get_x() >= 1)) {
+                    if (!(boardPieces[b.get_y()][b.get_x() - 1] == null) && (boardPieces[b.get_y()][b.get_x() - 1].getType().equals("♟")) && !(boardPieces[b.get_y()][b.get_x() - 1].getOwner().equals(p1))) {
+                        if ((b.get_x() - 2 >= 0) && !(boardPieces[b.get_y()][b.get_x() - 2] == null) && (boardPieces[b.get_y()][b.get_x() - 2].getOwner() == p1) && (boardPieces[b.get_y()][b.get_x() - 2].getType().equals("♟")) || (b.get_x() - 2 < 0)) {
+                            boardPieces[b.get_y()][b.get_x() - 1] = null;
+                        }
                     }
                 }
-                if (!(boardPieces[b.get_y()][b.get_x()-1]==null)&&(boardPieces[b.get_y()][b.get_x()-1].getType().equals("♟")) && !(boardPieces[b.get_y()][b.get_x()-1].getOwner().equals(p1))) {
-
-
-
-                }
-
+                if ((b.get_x() >= 1) && !(boardPieces[b.get_y()][b.get_x() - 1] == null) && (boardPieces[b.get_y()][b.get_x() - 1].getType().equals("♔")) && !(boardPieces[b.get_y()][b.get_x() - 1].getOwner().equals(p1))) {
+                    if ((b.get_x() - 2 >= 0) && !(boardPieces[b.get_y()][b.get_x() - 2] == null) && (boardPieces[b.get_y()][b.get_x() - 2].getOwner() == p1) && (boardPieces[b.get_y()][b.get_x() - 2].getType().equals("♟")) || (b.get_x() - 2 < 0)) {
+                        if ((b.get_y() <= 9) && !(boardPieces[b.get_y() + 1][b.get_x() - 1] == null) && (boardPieces[b.get_y() + 1][b.get_x() - 1].getType().equals("♟")) && (boardPieces[b.get_y() + 1][b.get_x() - 1].getOwner().equals(p1)) || (b.get_y() + 1 > 10)) {
+                            if ((b.get_y() >= 1) && !(boardPieces[b.get_y() - 1][b.get_x() - 1] == null) && (boardPieces[b.get_y() - 1][b.get_x() - 1].getType().equals("♟")) && (boardPieces[b.get_y() - 1][b.get_x() - 1].getOwner().equals(p1)) || (b.get_y() - 1 < 0)) {
+                                boardPieces[b.get_y()][b.get_x() - 1] = null;
+                            }
+                        }
+                    }
                 }
 //                if(boardPieces[b.get_y()][b.get_x()]){
+                if ((b.get_x() <= 9) && !(boardPieces[b.get_y()][b.get_x() + 1] == null) && (boardPieces[b.get_y()][b.get_x() + 1].getType().equals("♔")) && !(boardPieces[b.get_y()][b.get_x() + 1].getOwner().equals(p1))) {
+                    if ((b.get_x() + 2 <= 10) && !(boardPieces[b.get_y()][b.get_x() + 2] == null) && (boardPieces[b.get_y()][b.get_x() + 2].getOwner() == p1) && (boardPieces[b.get_y()][b.get_x() + 2].getType().equals("♟")) || (b.get_x() + 2 > 10)) {
+                        if ((b.get_y() <= 9) && !(boardPieces[b.get_y() + 1][b.get_x() + 1] == null) && (boardPieces[b.get_y() + 1][b.get_x() + 1].getType().equals("♟")) && (boardPieces[b.get_y() + 1][b.get_x() + 1].getOwner().equals(p1)) || (b.get_y() + 1 > 10)) {
+                            if ((b.get_y() >= 1) && !(boardPieces[b.get_y() - 1][b.get_x() + 1] == null) && (boardPieces[b.get_y() - 1][b.get_x() + 1].getType().equals("♟")) && (boardPieces[b.get_y() - 1][b.get_x() + 1].getOwner().equals(p1)) || (b.get_y() - 1 < 0)) {
+                                boardPieces[b.get_y()][b.get_x() + 1] = null;
+                            }
+                        }
+                    }
+                }
+                if ((b.get_y() <= 9) && !(boardPieces[b.get_y() + 1][b.get_x()] == null) && (boardPieces[b.get_y() + 1][b.get_x()].getType().equals("♔")) && !(boardPieces[b.get_y() + 1][b.get_x()].getOwner().equals(p1))) {
+                    if ((b.get_y() + 2 <= 10) && !(boardPieces[b.get_y() + 2][b.get_x()] == null) && (boardPieces[b.get_y() + 2][b.get_x()].getOwner() == p1) && (boardPieces[b.get_y() + 2][b.get_x()].getType().equals("♟")) || (b.get_y() + 2 > 10)) {
+                        if ((b.get_x() <= 9) && !(boardPieces[b.get_y() + 1][b.get_x() + 1] == null) && (boardPieces[b.get_y() + 1][b.get_x() + 1].getType().equals("♟")) && (boardPieces[b.get_y() + 1][b.get_x() + 1].getOwner().equals(p1)) || (b.get_x() + 1 > 10)) {
+                            if ((b.get_x() >= 1) && !(boardPieces[b.get_y() + 1][b.get_x() - 1] == null) && (boardPieces[b.get_y() + 1][b.get_x() - 1].getType().equals("♟")) && (boardPieces[b.get_y() + 1][b.get_x() - 1].getOwner().equals(p1)) || (b.get_x() - 1 < 0)) {
+                                boardPieces[b.get_y() + 1][b.get_x()] = null;
+                            }
+                        }
+                    }
+                }
+                if ((b.get_y() >= 1) && !(boardPieces[b.get_y() - 1][b.get_x()] == null) && (boardPieces[b.get_y() - 1][b.get_x()].getType().equals("♔")) && !(boardPieces[b.get_y() - 1][b.get_x()].getOwner().equals(p1))) {
+                    if ((b.get_y() - 2 >= 0) && !(boardPieces[b.get_y() - 2][b.get_x()] == null) && (boardPieces[b.get_y() - 2][b.get_x()].getOwner() == p1) && (boardPieces[b.get_y() - 2][b.get_x()].getType().equals("♟")) || (b.get_y() - 2 < 0)) {
+                        if ((b.get_x() <= 9) && !(boardPieces[b.get_y() - 1][b.get_x() + 1] == null) && (boardPieces[b.get_y() - 1][b.get_x() + 1].getType().equals("♟")) && (boardPieces[b.get_y() - 1][b.get_x() + 1].getOwner().equals(p1)) || (b.get_x() + 1 > 10)) {
+                            if ((b.get_x() >= 1) && !(boardPieces[b.get_y() - 1][b.get_x() - 1] == null) && (boardPieces[b.get_y() - 1][b.get_x() - 1].getType().equals("♟")) && (boardPieces[b.get_y() - 1][b.get_x() - 1].getOwner().equals(p1)) || (b.get_x() - 1 < 0)) {
+                                boardPieces[b.get_y() - 1][b.get_x()] = null;
+                            }
+                        }
+                    }
+                }
 
+            }
 //                }
 //            }
             return true;
@@ -64,70 +99,62 @@ public class GameLogic implements PlayableLogic{//
         return false;
     }
 
-    private boolean isValid(Position current, Position destination){
-        int crntX = current.get_x(),           crntY = current.get_y();
-        int destX = destination.get_x(),   destY = destination.get_y();
+    private boolean isValid(Position current, Position destination) {
+        int crntX = current.get_x(), crntY = current.get_y();
+        int destX = destination.get_x(), destY = destination.get_y();
         boolean validX = false, validY = false;
 
-        if(boardPieces[current.get_y()][current.get_x()].getType() != "♔") {
+        if (boardPieces[current.get_y()][current.get_x()].getType() != "♔") {
             if ((destX == 10 && destY == 10) || (destX == 10 && destY == 0) || (destX == 0 && destY == 10) || (destX == 0 && destY == 0)) {
                 return false;
             }
         }
 
-        if(getPieceAtPosition(destination) != null){
+        if (getPieceAtPosition(destination) != null) {
             return false;
         }
 
+        if (Math.abs(crntX - destX) != 0) {
 
+            validX = validWay(crntX, destX, crntY, destY);
+        }
+        if (Math.abs(crntY - destY) != 0) {
 
-        if(Math.abs(crntX - destX) != 0) {
-//            while(Math.abs(destX - crntX) != 0) {
-//
-//                if (boardPieces[crntY][destX] != null){
-//                    System.out.println("nvjnvj");
-//                    return false;
-//                }
-//                if(crntX > destX){
-//                    destX++;
-//                }
-//                else{
-//                    crntX++;
-//                }
-//            }
-            validX = true;
-       }
-        if(Math.abs(crntY - destY) != 0){
-
-//            while(Math.abs(destY - crntY) != 0) {
-//
-//                if (boardPieces[destY][crntX] != null){
-//                    System.out.println("vurb7");
-//                    return false;
-//                }
-//                if(crntY > destY){
-//                    destY++;
-//                }
-//                else{
-//                    crntY++;
-//                }
-//            }
-            validY = true;
+            validY = validWay(crntX, destX, crntY, destY);
         }
 
         return (validX ^ validY);
     }
-    private boolean validWay(int crnt, int dest){
-        if(crnt > dest){
-            int temp = crnt;
-            crnt = dest;
-            dest = temp;
-        }
-        while(Math.abs(dest - crnt) != 0) {
 
+    private boolean validWay(int crntX, int destX, int crntY, int destY) {
+
+        boolean sameRow = destY == crntY;
+        int s;
+        int t;
+        int i;
+        if (sameRow) {
+            s = Math.min(crntX, destX);
+            t = Math.max(crntX, destX);
+
+            for (i = s + 1; i < t; ++i) {
+                if (this.boardPieces[i][crntY] != null) {
+                    return false;
+                }
+            }
+        } else {
+            s = Math.min(crntY, destY);
+            t = Math.max(crntY, destY);
+
+            for (i = s + 1; i < t; ++i) {
+                if (this.boardPieces[crntX][i] != null) {
+                    return false;
+                }
+            }
         }
-        return false;
+
+        return true;
     }
+
 
     /*
     TODO: write a getPosition function in ConcretePiece class
@@ -255,3 +282,4 @@ public class GameLogic implements PlayableLogic{//
         }
     return false;}
 }
+
