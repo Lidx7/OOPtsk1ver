@@ -14,6 +14,9 @@ public class GameLogic implements PlayableLogic {//
     }
 
     public boolean move(Position a, Position b) {
+        if(isSecondPlayerTurn() == (boardPieces[a.get_y()][a.get_x()]).getOwner().isPlayerOne()){
+            return false;
+        }
         if (b == null) return true;
         if (isValid(a, b)) {
             boardPieces[b.get_y()][b.get_x()] = boardPieces[a.get_y()][a.get_x()];
