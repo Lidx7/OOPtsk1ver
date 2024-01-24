@@ -10,7 +10,7 @@ public class ConcretePlayer implements Player{
     }
 
     public void win(){
-        wins++;
+        this.wins++;
     }
 
     @Override
@@ -20,6 +20,6 @@ public class ConcretePlayer implements Player{
 
     @Override
     public int getWins() {
-        return wins;
+        return this.wins;
     }
 }
