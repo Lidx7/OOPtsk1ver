@@ -1,14 +1,23 @@
 import java.lang.Math;
+import java.util.Stack;
+
 public class GameLogic implements PlayableLogic {//
 
     private ConcretePiece[][] boardPieces;
     //  private Position[][] boardPositions;
     private ConcretePlayer player1 = new ConcretePlayer(true);
+    private  Stack<Integer> moves;
+    private  Stack<Player> player;
+    private  Stack<Integer> kills;
+
     private ConcretePlayer player2 = new ConcretePlayer(false);
     private boolean turn = false; // true - player1, false - player2
 
     public GameLogic() {
         boardPieces = new ConcretePiece[11][11];
+        moves=new Stack<Integer>();
+        player=new Stack<Player>();
+        kills=new Stack<Integer>();
         reset();
 //        boardPositions = new Position[11][11];
     }
@@ -19,6 +28,11 @@ public class GameLogic implements PlayableLogic {//
         }
         if (b == null) return true;
         if (isValid(a, b)) {
+            moves.push(a.get_x());
+            moves.push(a.get_y());
+            moves.push(b.get_x());
+            moves.push(b.get_y());
+            player.push(boardPieces[a.get_y()][a.get_x()].getOwner());
             boardPieces[b.get_y()][b.get_x()] = boardPieces[a.get_y()][a.get_x()];
             boardPieces[a.get_y()][a.get_x()] = null;
 
@@ -29,6 +43,10 @@ public class GameLogic implements PlayableLogic {//
                     if (!(boardPieces[b.get_y()][b.get_x() + 1] == null) && (boardPieces[b.get_y()][b.get_x() + 1].getType().equals("♟")) && !(boardPieces[b.get_y()][b.get_x() + 1].getOwner().equals(p1))) {
                         if ((b.get_x() + 2 <= 10) && !(boardPieces[b.get_y()][b.get_x() + 2] == null) && (boardPieces[b.get_y()][b.get_x() + 2].getOwner() == p1) && (boardPieces[b.get_y()][b.get_x() + 2].getType().equals("♟")) || (b.get_x() + 2 > 10)) {
                             boardPieces[b.get_y()][b.get_x() + 1] = null;
+                            kills.push(b.get_x()+1);
+                            kills.push(b.get_y());
+
+
                         }
                     }
                 }
@@ -36,6 +54,8 @@ public class GameLogic implements PlayableLogic {//
                     if (!(boardPieces[b.get_y() + 1][b.get_x()] == null) && (boardPieces[b.get_y() + 1][b.get_x()].getType().equals("♟")) && !(boardPieces[b.get_y() + 1][b.get_x()].getOwner().equals(p1))) {
                         if ((b.get_y() + 2 <= 10) && !(boardPieces[b.get_y() + 2][b.get_x()] == null) && (boardPieces[b.get_y() + 2][b.get_x()].getOwner() == p1) && (boardPieces[b.get_y() + 2][b.get_x()].getType().equals("♟")) || (b.get_y() + 2 > 10)) {
                             boardPieces[b.get_y() + 1][b.get_x()] = null;
+                            kills.push(b.get_x());
+                            kills.push(b.get_y()+1);
                         }
                     }
                 }
@@ -43,6 +63,8 @@ public class GameLogic implements PlayableLogic {//
                     if (!(boardPieces[b.get_y() - 1][b.get_x()] == null) && (boardPieces[b.get_y() - 1][b.get_x()].getType().equals("♟")) && !(boardPieces[b.get_y() - 1][b.get_x()].getOwner().equals(p1))) {
                         if ((b.get_y() - 2 >= 0) && !(boardPieces[b.get_y() - 2][b.get_x()] == null) && (boardPieces[b.get_y() - 2][b.get_x()].getOwner() == p1) && (boardPieces[b.get_y() - 2][b.get_x()].getType().equals("♟")) || (b.get_y() - 2 < 0)) {
                             boardPieces[b.get_y() - 1][b.get_x()] = null;
+                            kills.push(b.get_x());
+                            kills.push(b.get_y()-1);
                         }
                     }
                 }
@@ -50,6 +72,8 @@ public class GameLogic implements PlayableLogic {//
                     if (!(boardPieces[b.get_y()][b.get_x() - 1] == null) && (boardPieces[b.get_y()][b.get_x() - 1].getType().equals("♟")) && !(boardPieces[b.get_y()][b.get_x() - 1].getOwner().equals(p1))) {
                         if ((b.get_x() - 2 >= 0) && !(boardPieces[b.get_y()][b.get_x() - 2] == null) && (boardPieces[b.get_y()][b.get_x() - 2].getOwner() == p1) && (boardPieces[b.get_y()][b.get_x() - 2].getType().equals("♟")) || (b.get_x() - 2 < 0)) {
                             boardPieces[b.get_y()][b.get_x() - 1] = null;
+                            kills.push(b.get_x()-1);
+                            kills.push(b.get_y());
                         }
                     }
                 }
@@ -223,15 +247,15 @@ public class GameLogic implements PlayableLogic {//
     @Override
     public boolean isGameFinished() {
         Position p4=new Position(0,0);
-        Position p1=new Position(11,11);
-        Position p2=new Position(0,11);
-        Position p5=new Position(11,0);
-        if (getPieceAtPosition(p4).getType().equals("♔")){
+        Position p1=new Position(10,10);
+        Position p2=new Position(0,10);
+        Position p5=new Position(10,0);
+        if ((getPieceAtPosition(p4)!=null)&&getPieceAtPosition(p4).getType().equals("♔")){
             return true;}
-        else if (getPieceAtPosition(p5).getType().equals("♔"))return true;
-        else if (getPieceAtPosition(p1).getType().equals("♔"))return true;
-        else if (getPieceAtPosition(p2).getType().equals("♔"))return true;
-        else if (getPieceAtPosition(p4).getType().equals("♔"))return true;
+         if (getPieceAtPosition(p5).getType().equals("♔")){
+            return true;}
+         if (getPieceAtPosition(p1).getType().equals("♔"))return true;
+         if (getPieceAtPosition(p2).getType().equals("♔"))return true;
 
         boolean game=true;
         boolean game1=true;
@@ -262,6 +286,7 @@ public class GameLogic implements PlayableLogic {//
         player1 = new ConcretePlayer(true);
         player2 = new ConcretePlayer(false);
         turn = false;
+
         boardPieces [0][3] = new Pawn(player2);
         boardPieces [0][4] = new Pawn(player2);
         boardPieces [0][5] = new Pawn(player2);
@@ -311,18 +336,24 @@ public class GameLogic implements PlayableLogic {//
 
     @Override
     public void undoLastMove() {
+    boardPieces[moves.pop()][moves.pop()]=null;
+    boardPieces[moves.pop()][moves.pop()]= new Pawn(player.pop());
 
+    if(kills.peek()!=null){
+        if ((player.pop().equals(player1))){
+            System.out.println("vbfhbf");
+            boardPieces[kills.pop()][kills.pop()]=new Pawn(player2);}
+        if ((player.pop().equals(player2))){
+            System.out.println("25363");
+            boardPieces[kills.pop()][kills.pop()]=new Pawn(player1);}
+    }
     }
 
     @Override
     public int getBoardSize() {
         return 11;
-    }
+    }}
 
-    public boolean hiki (Position p1) {
-        if (p1.get_x() == 10) {
 
-        }
-    return false;}
-}
+
 
