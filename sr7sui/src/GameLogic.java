@@ -118,6 +118,7 @@ public class GameLogic implements PlayableLogic {//
             }
 //                }
 //            }
+            boardPieces[a.get_y()][a.get_x()] = null;
             return true;
 
 
@@ -195,25 +196,23 @@ public class GameLogic implements PlayableLogic {//
 
     private boolean validWay(int crntX, int destX, int crntY, int destY) {
 
-        boolean sameRow = destY == crntY;
-        int s;
-        int t;
-        int i;
-        if (sameRow) {
-            s = Math.min(crntX, destX);
-            t = Math.max(crntX, destX);
+        boolean isRow = (destY == crntY);
+        int min, max;
+        if (isRow) {
+            min = Math.min(crntX, destX);
+            max = Math.max(crntX, destX);
 
-            for (i = s + 1; i < t; ++i) {
-                if (this.boardPieces[i][crntY] != null) {
+            for (int i = min + 1; i < max; i++) {
+                if (this.boardPieces[crntY][i] != null) {
                     return false;
                 }
             }
         } else {
-            s = Math.min(crntY, destY);
-            t = Math.max(crntY, destY);
+            min = Math.min(crntY, destY);
+            max = Math.max(crntY, destY);
 
-            for (i = s + 1; i < t; ++i) {
-                if (this.boardPieces[crntX][i] != null) {
+            for (int i = min + 1; i < max; i++) {
+                if (this.boardPieces[i][crntX] != null) {
                     return false;
                 }
             }
@@ -246,21 +245,23 @@ public class GameLogic implements PlayableLogic {//
 
     @Override
     public boolean isGameFinished() {
-        Position p4=new Position(0,0);
-        Position p1=new Position(10,10);
-        Position p2=new Position(0,10);
-        Position p5=new Position(10,0);
-        if ((getPieceAtPosition(p4)!=null)&&getPieceAtPosition(p4).getType().equals("♔")){
-            return true;}
-         if (getPieceAtPosition(p5).getType().equals("♔")){
-            return true;}
-         if (getPieceAtPosition(p1).getType().equals("♔"))return true;
-         if (getPieceAtPosition(p2).getType().equals("♔"))return true;
+        Position[] edges = new Position[4];
+        edges[0]  = new Position(0,0);
+        edges[1] = new Position(10,10);
+        edges[2] = new Position(0,10);
+        edges[3] = new Position(10,0);
+        for(int i=0 ; i<4; i++){
+            if (getPieceAtPosition(edges[i]) == null)
+                return false;
+            if(getPieceAtPosition(edges[i]).equals("♔")){
+                return  true;
+            }
+        }
 
-        boolean game=true;
-        boolean game1=true;
+        boolean game = true;
+        boolean game1 = true;
 
-        for(int i=0;i<=10;i++) {
+        for (int i = 0; i <= 10; i++) {
             for (int j = 0; j <= 10; j++) {
                 Position p8 = new Position(j, i);
                 if (getPieceAtPosition(p8).getOwner() == player1) {
@@ -271,7 +272,7 @@ public class GameLogic implements PlayableLogic {//
                 }
             }
         }
-        return game||game1;
+        return (game || game1);
 
     }//anitamim
 
@@ -286,7 +287,6 @@ public class GameLogic implements PlayableLogic {//
         player1 = new ConcretePlayer(true);
         player2 = new ConcretePlayer(false);
         turn = false;
-
         boardPieces [0][3] = new Pawn(player2);
         boardPieces [0][4] = new Pawn(player2);
         boardPieces [0][5] = new Pawn(player2);
@@ -352,7 +352,9 @@ public class GameLogic implements PlayableLogic {//
     @Override
     public int getBoardSize() {
         return 11;
-    }}
+    }
+
+}
 
 
 
