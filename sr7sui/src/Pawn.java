@@ -1,8 +1,15 @@
 public class Pawn extends ConcretePiece{
     private int killcount;
+    String type;
 
     public Pawn(Player owner){
         super(owner);
+        if(owner.isPlayerOne()){
+            type = "♙";
+        }
+        else{
+            type = "♟";
+        }
         this.killcount=0;
     }
 
