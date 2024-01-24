@@ -6,11 +6,12 @@ public class GameLogic implements PlayableLogic {//
     private ConcretePiece[][] boardPieces;
     //  private Position[][] boardPositions;
     private ConcretePlayer player1 = new ConcretePlayer(true);
+    private ConcretePlayer player2 = new ConcretePlayer(false);
+
     private  Stack<Integer> moves;
     private  Stack<Player> player;
     private  Stack<Integer> kills;
 
-    private ConcretePlayer player2 = new ConcretePlayer(false);
     private boolean turn = false; // true - player1, false - player2
 
     public GameLogic() {
@@ -251,28 +252,38 @@ public class GameLogic implements PlayableLogic {//
         edges[2] = new Position(0,10);
         edges[3] = new Position(10,0);
         for(int i=0 ; i<4; i++){
-            if (getPieceAtPosition(edges[i]) == null)
-                return false;
-            if(getPieceAtPosition(edges[i]).equals("♔")){
-                return  true;
+            if (getPieceAtPosition(edges[i]) != null){
+                player1.win();
+                System.out.println(player1.getWins());
+                return true;}
             }
-        }
 
-        boolean game = true;
+
         boolean game1 = true;
-
+        boolean game2 = true;
+        boolean king =true;
         for (int i = 0; i <= 10; i++) {
             for (int j = 0; j <= 10; j++) {
                 Position p8 = new Position(j, i);
-                if (getPieceAtPosition(p8).getOwner() == player1) {
-                    game = false;
-                }
-                if (getPieceAtPosition(p8).getOwner() == player2) {
+                if ((getPieceAtPosition(p8)!=null)&&(getPieceAtPosition(p8).getOwner() == player1)) {
                     game1 = false;
                 }
+                if ((getPieceAtPosition(p8)!=null)&&(getPieceAtPosition(p8).getOwner() == player2)) {
+                    game2 = false;
+                }
+                if((getPieceAtPosition(p8)!=null)&&(getPieceAtPosition(p8).getType().equals("♔"))){
+                    king=false;
+
+                }
+
             }
         }
-        return (game || game1);
+        if (game1)player2.win();
+        if(game2)player1.win();
+        if (king)player2.win();
+
+
+        return (game1 || game2||king);
 
     }//anitamim
 
@@ -283,6 +294,7 @@ public class GameLogic implements PlayableLogic {//
 
     @Override
     public void reset() {
+
         boardPieces = new ConcretePiece[11][11];
         player1 = new ConcretePlayer(true);
         player2 = new ConcretePlayer(false);
@@ -339,7 +351,7 @@ public class GameLogic implements PlayableLogic {//
     boardPieces[moves.pop()][moves.pop()]=null;
     boardPieces[moves.pop()][moves.pop()]= new Pawn(player.pop());
 
-    if(kills.peek()!=null){
+    if((!kills.isEmpty())){
         if ((player.pop().equals(player1))){
             System.out.println("vbfhbf");
             boardPieces[kills.pop()][kills.pop()]=new Pawn(player2);}
