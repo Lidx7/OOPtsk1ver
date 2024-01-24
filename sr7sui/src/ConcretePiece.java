@@ -16,4 +16,8 @@ abstract class  ConcretePiece implements Piece{
         this.owner = owner;
     }
 
+    @Override
+    public  String getType(){
+        return "";
+    }
 }

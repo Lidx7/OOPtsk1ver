@@ -11,13 +11,13 @@ public class Position {
         this.y=pos.y;
     }
     public int get_x(){
-        return this.x;
+        return x;
     }
     public int get_y(){
-        return this.y;
+        return y;
     }
     public Position get_position(){
-        return new Position(this.x,this.y);
+        return new Position(y,x);
     }
     public void set_position(Position pos){
         this.x=pos.x;

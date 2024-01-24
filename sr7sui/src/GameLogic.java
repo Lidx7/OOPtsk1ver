@@ -1,4 +1,5 @@
 import java.lang.Math;
+
 public class GameLogic implements PlayableLogic {//
 
     private ConcretePiece[][] boardPieces;
@@ -14,13 +15,12 @@ public class GameLogic implements PlayableLogic {//
     }
 
     public boolean move(Position a, Position b) {
-        if(isSecondPlayerTurn() == (boardPieces[a.get_y()][a.get_x()]).getOwner().isPlayerOne()){
+        if (isSecondPlayerTurn() == (boardPieces[a.get_y()][a.get_x()]).getOwner().isPlayerOne()) {
             return false;
         }
         if (b == null) return true;
         if (isValid(a, b)) {
             boardPieces[b.get_y()][b.get_x()] = boardPieces[a.get_y()][a.get_x()];
-            ;
             boardPieces[a.get_y()][a.get_x()] = null;
 
             turn = !turn;
@@ -95,6 +95,7 @@ public class GameLogic implements PlayableLogic {//
             }
 //                }
 //            }
+            boardPieces[a.get_y()][a.get_x()] = null;
             return true;
 
 
@@ -131,25 +132,23 @@ public class GameLogic implements PlayableLogic {//
 
     private boolean validWay(int crntX, int destX, int crntY, int destY) {
 
-        boolean sameRow = destY == crntY;
-        int s;
-        int t;
-        int i;
-        if (sameRow) {
-            s = Math.min(crntX, destX);
-            t = Math.max(crntX, destX);
+        boolean isRow = (destY == crntY);
+        int min, max;
+        if (isRow) {
+            min = Math.min(crntX, destX);
+            max = Math.max(crntX, destX);
 
-            for (i = s + 1; i < t; ++i) {
-                if (this.boardPieces[i][crntY] != null) {
+            for (int i = min + 1; i < max; i++) {
+                if (this.boardPieces[crntY][i] != null) {
                     return false;
                 }
             }
         } else {
-            s = Math.min(crntY, destY);
-            t = Math.max(crntY, destY);
+            min = Math.min(crntY, destY);
+            max = Math.max(crntY, destY);
 
-            for (i = s + 1; i < t; ++i) {
-                if (this.boardPieces[crntX][i] != null) {
+            for (int i = min + 1; i < max; i++) {
+                if (this.boardPieces[i][crntX] != null) {
                     return false;
                 }
             }
@@ -182,21 +181,23 @@ public class GameLogic implements PlayableLogic {//
 
     @Override
     public boolean isGameFinished() {
-        Position p4=new Position(0,0);
-        Position p1=new Position(11,11);
-        Position p2=new Position(0,11);
-        Position p5=new Position(11,0);
-        if (getPieceAtPosition(p4).getType().equals("♔")){
-            return true;}
-        else if (getPieceAtPosition(p5).getType().equals("♔"))return true;
-        else if (getPieceAtPosition(p1).getType().equals("♔"))return true;
-        else if (getPieceAtPosition(p2).getType().equals("♔"))return true;
-        else if (getPieceAtPosition(p4).getType().equals("♔"))return true;
+        Position[] edges = new Position[4];
+        edges[0]  = new Position(0,0);
+        edges[1] = new Position(10,10);
+        edges[2] = new Position(0,10);
+        edges[3] = new Position(10,0);
+        for(int i=0 ; i<4; i++){
+            if (getPieceAtPosition(edges[i]) == null)
+                return false;
+            if(getPieceAtPosition(edges[i]).equals("♔")){
+                return  true;
+            }
+        }
 
-        boolean game=true;
-        boolean game1=true;
+        boolean game = true;
+        boolean game1 = true;
 
-        for(int i=0;i<=10;i++) {
+        for (int i = 0; i <= 10; i++) {
             for (int j = 0; j <= 10; j++) {
                 Position p8 = new Position(j, i);
                 if (getPieceAtPosition(p8).getOwner() == player1) {
@@ -207,7 +208,7 @@ public class GameLogic implements PlayableLogic {//
                 }
             }
         }
-        return game||game1;
+        return (game || game1);
 
     }//anitamim
 
@@ -222,50 +223,50 @@ public class GameLogic implements PlayableLogic {//
         player1 = new ConcretePlayer(true);
         player2 = new ConcretePlayer(false);
         turn = false;
-        boardPieces [0][3] = new Pawn(player2);
-        boardPieces [0][4] = new Pawn(player2);
-        boardPieces [0][5] = new Pawn(player2);
-        boardPieces [0][6] = new Pawn(player2);
-        boardPieces [0][7] = new Pawn(player2);
+        boardPieces[0][3] = new Pawn(player2);
+        boardPieces[0][4] = new Pawn(player2);
+        boardPieces[0][5] = new Pawn(player2);
+        boardPieces[0][6] = new Pawn(player2);
+        boardPieces[0][7] = new Pawn(player2);
 
-        boardPieces [1][5] = new Pawn(player2);
+        boardPieces[1][5] = new Pawn(player2);
 
-        boardPieces [3][0] = new Pawn(player2);
-        boardPieces [3][5] = new Pawn(player1);
-        boardPieces [3][10] = new Pawn(player2);
+        boardPieces[3][0] = new Pawn(player2);
+        boardPieces[3][5] = new Pawn(player1);
+        boardPieces[3][10] = new Pawn(player2);
 
-        boardPieces [4][0] = new Pawn(player2);
-        boardPieces [4][4] = new Pawn(player1);
-        boardPieces [4][5] = new Pawn(player1);
-        boardPieces [4][6] = new Pawn(player1);
-        boardPieces [4][10] = new Pawn(player2);
+        boardPieces[4][0] = new Pawn(player2);
+        boardPieces[4][4] = new Pawn(player1);
+        boardPieces[4][5] = new Pawn(player1);
+        boardPieces[4][6] = new Pawn(player1);
+        boardPieces[4][10] = new Pawn(player2);
 
-        boardPieces [5][0] = new Pawn(player2);
-        boardPieces [5][1] = new Pawn(player2);
-        boardPieces [5][3] = new Pawn(player1);
-        boardPieces [5][4] = new Pawn(player1);
-        boardPieces [5][5] = new King(player1);
-        boardPieces [5][6] = new Pawn(player1);
-        boardPieces [5][7] = new Pawn(player1);
-        boardPieces [5][9] = new Pawn(player2);
-        boardPieces [5][10] = new Pawn(player2);
-        boardPieces [6][0] = new Pawn(player2);
-        boardPieces [6][4] = new Pawn(player1);
-        boardPieces [6][5] = new Pawn(player1);
-        boardPieces [6][6] = new Pawn(player1);
-        boardPieces [6][10] = new Pawn(player2);
+        boardPieces[5][0] = new Pawn(player2);
+        boardPieces[5][1] = new Pawn(player2);
+        boardPieces[5][3] = new Pawn(player1);
+        boardPieces[5][4] = new Pawn(player1);
+        boardPieces[5][5] = new King(player1);
+        boardPieces[5][6] = new Pawn(player1);
+        boardPieces[5][7] = new Pawn(player1);
+        boardPieces[5][9] = new Pawn(player2);
+        boardPieces[5][10] = new Pawn(player2);
+        boardPieces[6][0] = new Pawn(player2);
+        boardPieces[6][4] = new Pawn(player1);
+        boardPieces[6][5] = new Pawn(player1);
+        boardPieces[6][6] = new Pawn(player1);
+        boardPieces[6][10] = new Pawn(player2);
 
-        boardPieces [7][0] = new Pawn(player2);
-        boardPieces [7][5] = new Pawn(player1);
-        boardPieces [7][10] = new Pawn(player2);
+        boardPieces[7][0] = new Pawn(player2);
+        boardPieces[7][5] = new Pawn(player1);
+        boardPieces[7][10] = new Pawn(player2);
 
-        boardPieces [9][5] = new Pawn(player2);
+        boardPieces[9][5] = new Pawn(player2);
 
-        boardPieces [10][3] = new Pawn(player2);
-        boardPieces [10][4] = new Pawn(player2);
-        boardPieces [10][5] = new Pawn(player2);
-        boardPieces [10][6] = new Pawn(player2);
-        boardPieces [10][7] = new Pawn(player2);
+        boardPieces[10][3] = new Pawn(player2);
+        boardPieces[10][4] = new Pawn(player2);
+        boardPieces[10][5] = new Pawn(player2);
+        boardPieces[10][6] = new Pawn(player2);
+        boardPieces[10][7] = new Pawn(player2);
 
     }
 
@@ -279,10 +280,11 @@ public class GameLogic implements PlayableLogic {//
         return 11;
     }
 
-    public boolean hiki (Position p1) {
+    public boolean hiki(Position p1) {
         if (p1.get_x() == 10) {
 
         }
-    return false;}
+        return false;
+    }
 }
 
