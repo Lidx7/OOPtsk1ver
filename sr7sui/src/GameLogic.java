@@ -117,17 +117,58 @@ public class GameLogic implements PlayableLogic {//
         if (getPieceAtPosition(destination) != null) {
             return false;
         }
+         if((crntX-destX==0)||(crntY-destY==0)){
+             if(crntX-destX==0){
+                 if(crntY>destY){
+                     while(crntY-destY>0){
+                         if(boardPieces[crntY-1][destX]!=null){
+                             return false;
+                         }
+                         crntY--;
+                     }
+                 }
+                 else {
+                     while(crntY-destY<0){
+                         if(boardPieces[crntY+1][destX]!=null){
+                             return false;
+                         }
+                         crntY++;
+                     }
+                 }
+             }
+             else {
+                 if(crntX>destX){
+                     while(crntX-destX>0){
+                         if(boardPieces[destY][crntX-1]!=null){
 
-        if (Math.abs(crntX - destX) != 0) {
+                             return false;
+                         }
+                         crntX--;
+                     }
+                 }
+                 else {
+                     while(crntX-destX<0){
+                         if(boardPieces[destY][crntX+1]!=null){
+                             return false;
 
-            validX = validWay(crntX, destX, crntY, destY);
-        }
-        if (Math.abs(crntY - destY) != 0) {
+                         }
+                         crntX++;
+                     }
+                 }
+             }
+             return true;
+         }
+//        if (Math.abs(crntX - destX) != 0) {
+//
+//            validX = validWay(crntX, destX, crntY, destY);
+//        }
+//        if (Math.abs(crntY - destY) != 0) {
+//
+//            validY = validWay(crntX, destX, crntY, destY);
+//        }
+//            if ()
 
-            validY = validWay(crntX, destX, crntY, destY);
-        }
-
-        return (validX ^ validY);
+        return (validX && validY);
     }
 
     private boolean validWay(int crntX, int destX, int crntY, int destY) {
