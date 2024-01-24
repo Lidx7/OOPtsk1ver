@@ -294,7 +294,6 @@ public class GameLogic implements PlayableLogic {//
 
     @Override
     public void reset() {
-
         boardPieces = new ConcretePiece[11][11];
         player1 = new ConcretePlayer(true);
         player2 = new ConcretePlayer(false);
