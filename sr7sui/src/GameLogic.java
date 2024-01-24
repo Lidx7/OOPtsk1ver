@@ -254,6 +254,7 @@ public class GameLogic implements PlayableLogic {//
             if (getPieceAtPosition(edges[i]) == null)
                 return false;
             if(getPieceAtPosition(edges[i]).equals("♔")){
+                player1.win();
                 return  true;
             }
         }
@@ -271,6 +272,9 @@ public class GameLogic implements PlayableLogic {//
                     game1 = false;
                 }
             }
+        }
+        if(game || game1){
+            player2.win();
         }
         return (game || game1);
 
