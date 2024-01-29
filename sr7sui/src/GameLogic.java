@@ -14,6 +14,7 @@ public class GameLogic implements PlayableLogic {//
     private  Stack<Integer> moves;
     private  Stack<Player> player;
     private  Stack<Integer> kills;
+    private Set<ConcretePiece> pieceSet;
 
     private boolean turn = false; // true - player1, false - player2
 
@@ -31,6 +32,8 @@ public class GameLogic implements PlayableLogic {//
         }
         if (b == null) return true;
         if (isValid(a, b)) {
+            pieceSet.add(boardPieces[a.get_y()][a.get_x()]);
+
             moves.push(a.get_x());
             moves.push(a.get_y());
             moves.push(b.get_x());
@@ -388,6 +391,33 @@ public class GameLogic implements PlayableLogic {//
     @Override
     public int getBoardSize() {
         return 11;
+    }
+
+    public void printResults(){
+        pieceSet.stream().sorted(new comparebetween());
+        for(int i=0; i<pieceSet.size(); i++){
+            System.out.println(pieceSet.stream().findFirst().get);
+        }
+
+
+    }
+
+
+    class comparebetween implements Comparator<ConcretePiece>{
+
+            @Override
+            public int compare(ConcretePiece o1, ConcretePiece o2) {
+                return Integer.compare(o1.getQueue().size(), o2.getQueue().size());
+            }
+
+
+        public int compareKills(ConcretePiece o1, ConcretePiece o2){
+            return Integer.compare(o1.getKills(),o2.getKills());
+
+        }
+        public int compareDistance(ConcretePiece o1, ConcretePiece o2){
+            return Integer.compare(o1.getDistance(), o2.getDistance());
+        }
     }
 
 }
