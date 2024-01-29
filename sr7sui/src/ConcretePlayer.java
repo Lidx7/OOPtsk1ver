@@ -1,7 +1,10 @@
+import java.util.Queue;
+
 public class ConcretePlayer implements Player{
 
     private boolean isAttacker;
     private int wins;
+
 
     public ConcretePlayer(boolean isAttacker){
         this.isAttacker = isAttacker;
