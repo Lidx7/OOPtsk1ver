@@ -14,7 +14,7 @@ public class GameLogic implements PlayableLogic {//
     private  Stack<Integer> moves;
     private  Stack<Player> player;
     private  Stack<Integer> kills;
-    private Set<ConcretePiece> pieceSet;
+    private ArrayList<ConcretePiece> pieceList;
 
     private boolean turn = false; // true - player1, false - player2
 
@@ -32,24 +32,24 @@ public class GameLogic implements PlayableLogic {//
         }
         if (b == null) return true;
         if (isValid(a, b)) {
-            pieceSet.add(boardPieces[a.get_y()][a.get_x()]);
-
             moves.push(a.get_x());
             moves.push(a.get_y());
             moves.push(b.get_x());
             moves.push(b.get_y());
             player.push(boardPieces[a.get_y()][a.get_x()].getOwner());
-            if(boardPieces[a.get_y()][a.get_x()].getQueue().isEmpty()){
-                boardPieces[a.get_y()][a.get_x()].adddistance(a);
+            if (boardPieces[a.get_y()][a.get_x()].getarray().isEmpty()){
+                boardPieces[a.get_y()][a.get_x()].add1(a);
             }
+            boardPieces[a.get_y()][a.get_x()].add1(b);
+
+//                System.out.println(a);
+
             if(b.get_x()-a.get_x()==0){
                 boardPieces[a.get_y()][a.get_x()].setDistance(Math.abs(b.get_y()-a.get_y()));
             }
             if(b.get_y()-a.get_y()==0){
                 boardPieces[a.get_y()][a.get_x()].setDistance(Math.abs(b.get_x()-a.get_x()));
-            }
-            boardPieces[a.get_y()][a.get_x()].adddistance(b);
-            boardPieces[a.get_y()][a.get_x()].plusdistance();
+            }//            System.out.println(boardPieces[a.get_y()][a.get_x()].getQueue().toString());
 
             boardPieces[b.get_y()][b.get_x()] = boardPieces[a.get_y()][a.get_x()];
             boardPieces[a.get_y()][a.get_x()] = null;
@@ -279,6 +279,7 @@ public class GameLogic implements PlayableLogic {//
             if (getPieceAtPosition(edges[i]) != null){
                 player1.win();
                 System.out.println(player1.getWins());
+                printg1();
                 return true;}
             }
 
@@ -302,9 +303,23 @@ public class GameLogic implements PlayableLogic {//
 
             }
         }
-        if (game1)player2.win();
-        if(game2)player1.win();
-        if (king)player2.win();
+        if (game1){
+            printg1();
+            System.out.println("3");
+
+            player2.win();
+        }
+        if(game2){
+            printg1();
+            System.out.println("1");
+
+            player1.win();
+        }
+        if (king){
+            printg1();
+            System.out.println("0");
+            player2.win();
+        }
 
 
         return (game1 || game2||king);
@@ -318,6 +333,16 @@ public class GameLogic implements PlayableLogic {//
 
     @Override
     public void reset() {
+        this.pieceList= new ArrayList<ConcretePiece>();
+//        for(int i=0;i<10;i++){
+//            for(int j=0; j<10; j++){
+//                if((boardPieces[i][j]!=null)&&!(boardPieces[i][j].getQueue().isEmpty())){
+//                    pieceSet.add(boardPieces[i][j]);
+//                }
+//            }
+//        }
+//        printResults();
+
         boardPieces = new ConcretePiece[11][11];
         player1 = new ConcretePlayer(true);
         player2 = new ConcretePlayer(false);
@@ -366,11 +391,9 @@ public class GameLogic implements PlayableLogic {//
         boardPieces [10][5] = new Pawn(player2);
         boardPieces [10][6] = new Pawn(player2);
         boardPieces [10][7] = new Pawn(player2);
-        for(int i=0;i<10;i++){
-            for(int j=0; j<10; j++){
 
-            }
-        }
+
+
     }
 
     @Override
@@ -394,33 +417,49 @@ public class GameLogic implements PlayableLogic {//
     }
 
     public void printResults(){
-        pieceSet.stream().sorted(new comparebetween());
-        for(int i=0; i<pieceSet.size(); i++){
-            System.out.println(pieceSet.stream().findFirst().get);
-        }
-
 
     }
 
 
-    class comparebetween implements Comparator<ConcretePiece>{
 
-            @Override
-            public int compare(ConcretePiece o1, ConcretePiece o2) {
-                return Integer.compare(o1.getQueue().size(), o2.getQueue().size());
+//        System.out.println(23);
+//        if(!(pieceSet.isEmpty())){
+//            System.out  .println("34434");
+//            pieceSet.stream().sorted(new comparebetween());}
+//        System.out.println(pieceSet.toString());
+////        for(int i=0; i<pieceSet.size(); i++){
+////            System.out.println(pieceSet.stream().findFirst().get);
+////        }
+
+    Comparator<ConcretePiece> g1= new Comparator<ConcretePiece>() {
+        @Override
+        public int compare(ConcretePiece o1, ConcretePiece o2) {
+            return Integer.compare(o2.getarray().size(),o1.getarray().size());
+        }
+    };
+
+    public void printg1(){
+        for(int k=0; k<11; k++){
+            for(int j=0; j<11; j++){
+                if(!(boardPieces[k][j]==null)){
+                    if (!boardPieces[k][j].getarray().isEmpty()){
+                    pieceList.add(boardPieces[k][j]);}
+                }
             }
-
-
-        public int compareKills(ConcretePiece o1, ConcretePiece o2){
-            return Integer.compare(o1.getKills(),o2.getKills());
-
         }
-        public int compareDistance(ConcretePiece o1, ConcretePiece o2){
-            return Integer.compare(o1.getDistance(), o2.getDistance());
+        pieceList.sort(g1);
+        int i=0;
+        while(i<pieceList.size()){
+            System.out.println(pieceList.get(i).getarray().toString());
+            i++;
         }
     }
+    }
 
-}
+
+
+
+
 
 
 

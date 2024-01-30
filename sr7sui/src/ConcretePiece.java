@@ -1,17 +1,31 @@
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Queue;
 
 abstract class  ConcretePiece implements Piece{
     private Player owner;
     private int travel;
     private int kills;
-    private Queue<Position> distance_cover;
+    private ArrayList<Position> positions;
+    private int  id ;
+
      public void kill(){
         this.kills++;
     }
         public int getKills(){
          return this.kills;
         }
-    public void plusdistance(){
+    public void add1(Position p1 ){
+         this.positions.add(p1);
+    }
+    public Position getPosition(int i){
+         return positions.get(i);
+    }
+    public ArrayList getarray(){
+         return this.positions;
+    }
+        public void plusdistance(){
         this.travel++;
     }
     public void setDistance(int x){
@@ -20,17 +34,20 @@ abstract class  ConcretePiece implements Piece{
     public int getDistance(){
         return this.travel;
     }
-    public Queue<Position> getQueue(){
-        return this.distance_cover;
+    public int getId(){
+         return this.id;
     }
-    public void adddistance(Position p1 ){
-        distance_cover.add(p1);
+    public void Setid(int  ID){
+         this.id=ID;
     }
 
-    public ConcretePiece(Player d3 ){
-        this.owner=d3;
+    public ConcretePiece(Player d3 ) {
+        this.owner = d3;
+        this.positions= new ArrayList<Position>();
 
     }
+
+
 
 
     public Player getOwner() {

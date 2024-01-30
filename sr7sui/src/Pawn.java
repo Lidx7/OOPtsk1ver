@@ -14,6 +14,7 @@ public class Pawn extends ConcretePiece{
     }
 
 
+
     public void cancelKill(){
         this.killcount--;
     }
