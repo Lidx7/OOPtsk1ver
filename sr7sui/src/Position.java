@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+
 public class Position {
     private int x;
     private int y;
+    private ArrayList<Integer> peoples;
     public Position(int y,int x){
         this.x = x;
         this.y = y;
@@ -23,7 +26,15 @@ public class Position {
         this.x=pos.x;
         this.y=pos.y;
     }
-
+    public void addpeople(int id){
+        peoples.add(id);
+    }
+    public int getPeopleSize(){
+        return this.peoples.size();
+    }
+    public ArrayList<Integer> getPeoples(){
+        return this.peoples;
+    }
     public String toString (){
         return ("["+this.get_y()+"]"+"["+this.get_x()+"]");
     }

@@ -32,9 +32,6 @@ abstract class  ConcretePiece implements Piece{
     public ArrayList getarray(){
          return this.positions;
     }
-        public void plusdistance(){
-        this.travel++;
-    }
     public void setDistance(int x){
          this.travel=this.travel+x;
     }
@@ -70,4 +67,6 @@ abstract class  ConcretePiece implements Piece{
     public  String getType(){
         return "";
     }
+
+
 }
