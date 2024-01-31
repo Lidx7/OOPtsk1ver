@@ -4,6 +4,7 @@ public class Position {
     private int x;
     private int y;
     private ArrayList<Integer> peoples = new ArrayList<Integer>();
+    private int steppedOn;
     public Position(int y,int x){
         this.x = x;
         this.y = y;
@@ -37,6 +38,8 @@ public class Position {
         return this.peoples;
     }
     public String toString (){
-        return ("["+this.get_y()+"]"+"["+this.get_x()+"]");
+        return ("("+this.get_y()+","+" "+this.get_x()+")");
     }
+
+
 }
