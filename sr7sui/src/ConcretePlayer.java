@@ -4,7 +4,7 @@ public class ConcretePlayer implements Player{
 
     private boolean isAttacker;
     private int wins;
-
+    private boolean isWinner;
 
     public ConcretePlayer(boolean isAttacker){
         this.isAttacker = isAttacker;
@@ -12,6 +12,12 @@ public class ConcretePlayer implements Player{
 
     }
 
+    public void setWinner(boolean ae ){
+        this.isWinner=ae;
+    }
+    public boolean isWinner(){
+        return this.isWinner;
+    }
     public void win(){
         this.wins++;
     }

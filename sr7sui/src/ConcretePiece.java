@@ -9,11 +9,18 @@ abstract class  ConcretePiece implements Piece{
     private int kills;
     private ArrayList<Position> positions;
     private int  id ;
+    private String idS;
 
      public void kill(){
         this.kills++;
     }
-        public int getKills(){
+    public void setString(String h){
+         this.idS=h;
+    }
+    public String getStirng(){
+         return this.idS;
+    }
+    public int getKills(){
          return this.kills;
         }
     public void add1(Position p1 ){
@@ -37,7 +44,7 @@ abstract class  ConcretePiece implements Piece{
     public int getId(){
          return this.id;
     }
-    public void Setid(int  ID){
+    public void setid(int  ID){
          this.id=ID;
     }
 

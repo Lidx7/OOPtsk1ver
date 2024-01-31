@@ -13,14 +13,16 @@ public class Pawn extends ConcretePiece{
         this.killcount=0;
     }
 
-
-
-    public void cancelKill(){
-        this.killcount--;
-    }
-    public int getKills(){
-        return this.killcount;
-    }
+//    public void kill(){
+//        this.killcount++;
+//    }
+//
+//    public void cancelKill(){
+//        this.killcount--;
+//    }
+//    public int getKills(){
+//        return this.killcount;
+//    }
 
     @Override
     public String getType() {
