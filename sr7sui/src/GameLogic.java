@@ -571,7 +571,7 @@ public class GameLogic implements PlayableLogic {//
 
         }
 
-        System.out.println("***************************************************************************/n");
+        System.out.println("***************************************************************************");
         }
     public void printg2(){
         pieceList.removeAll(pieceList);
