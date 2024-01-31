@@ -51,13 +51,13 @@ public class GameLogic implements PlayableLogic {//
             boardPieces[b.get_y()][b.get_x()] = boardPieces[a.get_y()][a.get_x()];
             boardPieces[a.get_y()][a.get_x()] = null;
             if(boardPieces[b.get_y()][b.get_x()].getOwner().equals(player1)){
-           if (!allofthePositions.get(b.get_y()*10+b.get_x()).getPeoples().contains(boardPieces[b.get_y()][b.get_x()].getId())){
-               allofthePositions.get(b.get_y()*10+b.get_x()).addpeople(boardPieces[b.get_y()][b.get_x()].getId());}
+           if (!allofthePositions.get(b.get_y()*11+b.get_x()).getPeoples().contains(boardPieces[b.get_y()][b.get_x()].getId())){
+               allofthePositions.get(b.get_y()*11+b.get_x()).addpeople(boardPieces[b.get_y()][b.get_x()].getId());}}
                else{
-               if (!allofthePositions.get(b.get_y()*10+b.get_x()).getPeoples().contains(-boardPieces[b.get_y()][b.get_x()].getId())){
-                   allofthePositions.get(b.get_y()*10+b.get_x()).addpeople(-boardPieces[b.get_y()][b.get_x()].getId());}
+               if (!allofthePositions.get(b.get_y()*11+b.get_x()).getPeoples().contains(-boardPieces[b.get_y()][b.get_x()].getId())){
+                   allofthePositions.get(b.get_y()*11+b.get_x()).addpeople(-boardPieces[b.get_y()][b.get_x()].getId());}
                }
-            }
+
             turn = !turn;
             Player p1 = boardPieces[b.get_y()][b.get_x()].getOwner();
             if (boardPieces[b.get_y()][b.get_x()].getType().equals("♟")) {
@@ -286,6 +286,7 @@ public class GameLogic implements PlayableLogic {//
                 printg1();
                 printg2();
                 printg3();
+                printg4();
                 return true;}
             }
 
@@ -313,19 +314,21 @@ public class GameLogic implements PlayableLogic {//
             printg1();
             printg2();
             printg3();
-
+            printg4();
             player2.win();
         }
         if(game2){
             printg1();
             printg2();
             printg3();
+            printg4();
             player1.win();
         }
         if (king){
             printg1();
             printg2();
             printg3();
+            printg4();
             player2.win();
         }
 
@@ -342,7 +345,7 @@ public class GameLogic implements PlayableLogic {//
     @Override
     public void reset() {
         this.pieceList= new ArrayList<ConcretePiece>();
-
+        this.allofthePositions=new ArrayList<Position>();
         boardPieces = new ConcretePiece[11][11];
 
         turn = false;
@@ -390,8 +393,8 @@ public class GameLogic implements PlayableLogic {//
         boardPieces[4][6].setid(10);
         boardPieces[4][6].setString("A10");
         boardPieces [4][10] = new Pawn(player2);
-        boardPieces[0][5].setid(21);
-        boardPieces[0][5].setString("D21");
+        boardPieces[4][10].setid(21);
+        boardPieces[4][10].setString("D21");
 
         boardPieces [5][0] = new Pawn(player2);
         boardPieces[5][0].setid(3);
@@ -466,17 +469,23 @@ public class GameLogic implements PlayableLogic {//
             for (int j =0;j<11;j++){
                 Position p1=new Position(i,j);
                 allofthePositions.add(p1);
-                if(boardPieces[i][j]!=null){
-                    if (boardPieces[i][j].getOwner().equals(player1)){
-                    allofthePositions.get(i*10+j).addpeople(boardPieces[i][j].getId());}
-                    else {
-                        allofthePositions.get(i*10+j).addpeople(-boardPieces[i][j].getId());
-                    }
-                }
             }
         }
+        for (int i=0;i<11;i++){
+            for (int j =0;j<11;j++){
+            if(boardPieces[i][j]!=null){
+            if (boardPieces[i][j].getOwner().equals(player1)){
+                allofthePositions.get((i*11)+j).addpeople(boardPieces[i][j].getId());}
+
+            else {
+                allofthePositions.get((i*11)+j).addpeople(-boardPieces[i][j].getId());
+
+        }
+
 
     }
+        }}
+        }
 
     @Override
     public void undoLastMove() {
@@ -551,7 +560,7 @@ public class GameLogic implements PlayableLogic {//
         public int compare(ConcretePiece o1, ConcretePiece o2) {
         int i= Integer.compare(o2.getDistance(),o1.getDistance());
         if (i==0){
-            int j= Integer.compare(o1.getId(), o2.getId());
+            int j= Integer.compare(o2.getId(), o1.getId());
             if(j==0){
                 if(turn==true){
                     return 1;
@@ -584,7 +593,7 @@ public class GameLogic implements PlayableLogic {//
         if (turn == false) {
             while(i< this.pieceList.size()){
                 if (this.pieceList.get(i).getOwner().equals(player1)) {
-                    System.out.println(this.pieceList.get(i).getStirng() + ": " + this.pieceList.get(i).getarray().get(i).toString());
+                    System.out.println(this.pieceList.get(i).getStirng() + ": " + this.pieceList.get(i).getarray().toString());
 
                 }
                 i++;
@@ -592,21 +601,21 @@ public class GameLogic implements PlayableLogic {//
             i=0;
             while (i< this.pieceList.size()){
                 if (this.pieceList.get(i).getOwner().equals(player2)){
-                    System.out.println(this.pieceList.get(i).getStirng() +": " + this.pieceList.get(i).getarray().get(i).toString());
+                    System.out.println(this.pieceList.get(i).getStirng() +": " + this.pieceList.get(i).getarray().toString());
                 }
                 i++;
             }}
         else{
             while (i< this.pieceList.size()){
                 if (this.pieceList.get(i).getOwner().equals(player2)){
-                    System.out.println(this.pieceList.get(i).getStirng() + ": " + this.pieceList.get(i).getarray().get(i).toString());
+                    System.out.println(this.pieceList.get(i).getStirng() + ": " + this.pieceList.get(i).getarray().toString());
 
                 }
                 i++;}
             i=0;
             while(i< this.pieceList.size()){
                 if (this.pieceList.get(i).getOwner().equals(player1)) {
-                    System.out.println(this.pieceList.get(i).getStirng() + ": " + this.pieceList.get(i).getarray().get(i).toString());
+                    System.out.println(this.pieceList.get(i).getStirng() + ": " + this.pieceList.get(i).getarray().toString());
 
                 }
                 i++;
@@ -659,9 +668,17 @@ public class GameLogic implements PlayableLogic {//
     }
 //        pieceListp(pieceList);
 
+        public void printg4(){
+            allofthePositions.sort(g4);
+            int i=0;
+        while (i<allofthePositions.size()){
+            if (allofthePositions.get(i).getPeopleSize()>1){
+            System.out.println(allofthePositions.get(i).toString()+allofthePositions.get(i).getPeopleSize()+" pieces");}
+            i++;
+        }
+        }
+//    public
     }
-
-
 
 
 

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Position {
     private int x;
     private int y;
-    private ArrayList<Integer> peoples;
+    private ArrayList<Integer> peoples = new ArrayList<Integer>();
     public Position(int y,int x){
         this.x = x;
         this.y = y;
@@ -12,6 +12,7 @@ public class Position {
     {
         this.x=pos.x;
         this.y=pos.y;
+        this.peoples= new ArrayList<Integer>();
     }
     public int get_x(){
         return x;
@@ -27,7 +28,7 @@ public class Position {
         this.y=pos.y;
     }
     public void addpeople(int id){
-        peoples.add(id);
+        this.peoples.add(id);
     }
     public int getPeopleSize(){
         return this.peoples.size();
