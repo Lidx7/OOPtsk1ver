@@ -23,6 +23,7 @@ public class GameLogic implements PlayableLogic {//
         moves=new Stack<Integer>();
         player=new Stack<Player>();
         kills=new Stack<Integer>();
+
         reset();
     }
 
@@ -334,18 +335,10 @@ public class GameLogic implements PlayableLogic {//
     @Override
     public void reset() {
         this.pieceList= new ArrayList<ConcretePiece>();
-//        for(int i=0;i<10;i++){
-//            for(int j=0; j<10; j++){
-//                if((boardPieces[i][j]!=null)&&!(boardPieces[i][j].getQueue().isEmpty())){
-//                    pieceSet.add(boardPieces[i][j]);
-//                }
-//            }
-//        }
-//        printResults();
 
         boardPieces = new ConcretePiece[11][11];
-        player1 = new ConcretePlayer(true);
-        player2 = new ConcretePlayer(false);
+//        player1 = new ConcretePlayer(true);
+//        player2 = new ConcretePlayer(false);
         turn = false;
         boardPieces [0][3] = new Pawn(player2);
         boardPieces [0][4] = new Pawn(player2);
