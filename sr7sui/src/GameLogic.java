@@ -26,6 +26,13 @@ public class GameLogic implements PlayableLogic {//
         player=new Stack<Player>();
         kills=new Stack<Integer>();
 
+//        if(isGameFinished()){
+//            printg1();
+//            printg2();
+//            printg3();
+//            printg4();
+//        }
+
         reset();
     }
 
@@ -33,6 +40,8 @@ public class GameLogic implements PlayableLogic {//
         if(isSecondPlayerTurn() == (boardPieces[a.get_y()][a.get_x()]).getOwner().isPlayerOne()){
             return false;
         }
+
+
         if (b == null) return true;
         if (isValid(a, b)) {
             moves.push(a.get_x());
@@ -165,13 +174,15 @@ public class GameLogic implements PlayableLogic {//
             }
 //                }
 //            }
-            isGameFinished();
+           // isGameFinished();
+            printResults();
 
             boardPieces[a.get_y()][a.get_x()] = null;
             return true;
 
 
         }
+
         return false;
     }
 
@@ -303,10 +314,10 @@ public class GameLogic implements PlayableLogic {//
             if (getPieceAtPosition(edges[i]) != null){
                 player1.win();
                 System.out.println(player1.getWins());
-                printg1();
-                printg2();
-                printg3();
-                printg4();
+//                printg1();
+//                printg2();
+//                printg3();
+//                printg4();
                 return true;}
             }
 
@@ -331,24 +342,24 @@ public class GameLogic implements PlayableLogic {//
             }
         }
         if (game1){
-            printg1();
-            printg2();
-            printg3();
-            printg4();
+//            printg1();
+//            printg2();
+//            printg3();
+//            printg4();
             player2.win();
         }
         if(game2){
-            printg1();
-            printg2();
-            printg3();
-            printg4();
+//            printg1();
+//            printg2();
+//            printg3();
+//            printg4();
             player1.win();
         }
         if (king){
-            printg1();
-            printg2();
-            printg3();
-            printg4();
+//            printg1();
+//            printg2();
+//            printg3();
+//            printg4();
             player2.win();
         }
 
@@ -528,7 +539,12 @@ public class GameLogic implements PlayableLogic {//
     }
 
     public void printResults(){
-
+        if(isGameFinished()){
+            printg1();
+            printg2();
+            printg3();
+            printg4();
+        }
     }
 
 
