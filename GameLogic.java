@@ -26,13 +26,6 @@ public class GameLogic implements PlayableLogic {//
         player=new Stack<Player>();
         kills=new Stack<Integer>();
 
-//        if(isGameFinished()){
-//            printg1();
-//            printg2();
-//            printg3();
-//            printg4();
-//        }
-
         reset();
     }
 
@@ -172,9 +165,7 @@ public class GameLogic implements PlayableLogic {//
                 }
 
             }
-//                }
-//            }
-           // isGameFinished();
+
             printResults();
 
             boardPieces[a.get_y()][a.get_x()] = null;
@@ -241,15 +232,7 @@ public class GameLogic implements PlayableLogic {//
              }
              return true;
          }
-//        if (Math.abs(crntX - destX) != 0) {
-//
-//            validX = validWay(crntX, destX, crntY, destY);
-//        }
-//        if (Math.abs(crntY - destY) != 0) {
-//
-//            validY = validWay(crntX, destX, crntY, destY);
-//        }
-//            if ()
+
 
         return (validX && validY);
     }
@@ -314,10 +297,6 @@ public class GameLogic implements PlayableLogic {//
             if (getPieceAtPosition(edges[i]) != null){
                 player1.win();
                 System.out.println(player1.getWins());
-//                printg1();
-//                printg2();
-//                printg3();
-//                printg4();
                 return true;}
             }
 
@@ -342,24 +321,12 @@ public class GameLogic implements PlayableLogic {//
             }
         }
         if (game1){
-//            printg1();
-//            printg2();
-//            printg3();
-//            printg4();
             player2.win();
         }
         if(game2){
-//            printg1();
-//            printg2();
-//            printg3();
-//            printg4();
             player1.win();
         }
         if (king){
-//            printg1();
-//            printg2();
-//            printg3();
-//            printg4();
             player2.win();
         }
 
@@ -504,19 +471,17 @@ public class GameLogic implements PlayableLogic {//
         }
         for (int i=0;i<11;i++){
             for (int j =0;j<11;j++){
-            if(boardPieces[i][j]!=null){
-            if (boardPieces[i][j].getOwner().equals(player1)){
-                allofthePositions.get((i*11)+j).addpeople(boardPieces[i][j].getId());}
-
-            else {
-                allofthePositions.get((i*11)+j).addpeople(-boardPieces[i][j].getId());
-
+                if(boardPieces[i][j]!=null){
+                    if (boardPieces[i][j].getOwner().equals(player1)){
+                        allofthePositions.get((i*11)+j).addpeople(boardPieces[i][j].getId());
+                    }
+                    else {
+                        allofthePositions.get((i*11)+j).addpeople(-boardPieces[i][j].getId());
+                    }
+                }
+            }
         }
-
-
     }
-        }}
-        }
 
     @Override
     public void undoLastMove() {
@@ -550,13 +515,7 @@ public class GameLogic implements PlayableLogic {//
 
 
 //        System.out.println(23);
-//        if(!(pieceSet.isEmpty())){
-//            System.out  .println("34434");
-//            pieceSet.stream().sorted(new comparebetween());}
-//        System.out.println(pieceSet.toString());
-////        for(int i=0; i<pieceSet.size(); i++){
-////            System.out.println(pieceSet.stream().findFirst().get);
-////        }
+
 
     Comparator<ConcretePiece> g1= new Comparator<ConcretePiece>() {
         @Override
@@ -721,8 +680,8 @@ public class GameLogic implements PlayableLogic {//
             System.out.println("***************************************************************************");
 
         }
-//    public
-    }
+
+}
 
 
 
